@@ -4,7 +4,7 @@ const Footer = () => {
 
     const year = 2021 + 1
     return (
-        <footer>
+        <footer className='text-center'>
             <p><small> copyright c {year} </small></p>
         </footer>
     );
