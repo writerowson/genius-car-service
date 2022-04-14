@@ -3,6 +3,7 @@ import { Form, Button } from 'react-bootstrap'
 import { useSignInWithEmailAndPassword } from 'react-firebase-hooks/auth';
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import auth from '../../../firbaseInit';
+import JointLogIn from './Jointlogin/JointLogIn';
 
 const Login = () => {
     const emailRef = useRef('')
@@ -15,6 +16,14 @@ const Login = () => {
             navigate(from, { replace: true });
         }
     })
+
+    // to show other option also while try to su=ign in google
+    let errorElement
+    if (error) {
+        errorElement = <div>
+            <p className='text-danger'>Error: {error?.message} </p>
+        </div>
+    }
     const [
         signInWithEmailAndPassword,
         user,
@@ -38,17 +47,10 @@ const Login = () => {
     return (
         <div className='container w-50 mx-auto'>
             <h3 className='text-promary text-center mt-3'>Plz logIn</h3>
-            <Form></Form>
-
             <Form onSubmit={handleSubmit}>
                 <Form.Group className="mb-3" controlId="formBasicEmail">
-                    <Form.Label>Email address</Form.Label>
                     <Form.Control ref={emailRef} type="email" placeholder="Enter email" />
-                    <Form.Text className="text-muted">
-                        We'll never share your email with anyone else.
-                    </Form.Text>
                 </Form.Group>
-
                 <Form.Group className="mb-3" controlId="formBasicPassword">
                     <Form.Label>Password</Form.Label>
                     <Form.Control ref={passwordRef} type="password" placeholder="Password" required />
@@ -61,7 +63,10 @@ const Login = () => {
                 </Button>
 
             </Form>
-            <p>New to Genius Car?<Link to='/register' className='text-danger pe-auto text-decoration-none' onClick={navigateRef}> Plz Register</Link></p>
+            {errorElement}
+            <p>New to Genius Car?<Link to='/register' className='text-danger  pe-auto text-decoration-none' onClick={navigateRef}> Plz Register</Link></p>
+
+            <JointLogIn></JointLogIn>
         </div>
     );
 };
