@@ -13,16 +13,18 @@ const Services = () => {
 
 
     return (
-        <div className='services-title' >
-            <h1>Our Servises </h1>
-            <div className="services-container">
-                {
-                    servises.map(service => <Service
-                        key={service.id}
-                        service={service}
-                    ></Service>)
-                }</div>
+        <div className="container">
+            <div id='services' className='services-title row' >
+                <h1>Our Servises </h1>
+                <div className="services-container">
+                    {
+                        servises.map(service => <Service
+                            key={service.id}
+                            service={service}
+                        ></Service>)
+                    }</div>
 
+            </div>
         </div>
     );
 };
