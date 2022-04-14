@@ -10,6 +10,8 @@ import ServiceDetail from './components/Pages/ServiceDetail/ServiceDetail';
 import NotFound from './components/Pages/Header/NotFound/NotFound';
 import Login from './components/Pages/LogIn/Login';
 import Register from './components/Pages/LogIn/Register';
+import CheckOut from './components/Pages/CheckOut/CheckOut';
+import RequireAuth from './components/Pages/LogIn/RequireAuth/RequireAuth';
 
 
 function App() {
@@ -24,6 +26,9 @@ function App() {
         <Route path='/login' element={<Login></Login>}></Route>
         <Route path='/service/:serviceId' element={<ServiceDetail></ServiceDetail>}></Route>
         <Route path='/register' element={<Register></Register>}></Route>
+        <Route path='/checkout' element={
+          <RequireAuth><CheckOut></CheckOut></RequireAuth>
+        }></Route>
         <Route path="*" element={<NotFound></NotFound>}></Route>
       </Routes>
       <Footer></Footer>
