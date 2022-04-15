@@ -5,6 +5,7 @@ import './Register.css'
 import { useCreateUserWithEmailAndPassword, useUpdateProfile } from 'react-firebase-hooks/auth';
 import auth from '../../../firbaseInit';
 import JointLogIn from './Jointlogin/JointLogIn';
+import Loading from '../shared/Loading/Loading';
 
 const Register = () => {
     const [agree, setagree] = useState(false)
@@ -14,7 +15,7 @@ const Register = () => {
         loading,
         error,
     ] = useCreateUserWithEmailAndPassword(auth);
-    const [updateProfile, updating, error1] = useUpdateProfile(auth);
+    const [updateProfile, updating] = useUpdateProfile(auth);
 
     const navigate = useNavigate()
 
@@ -27,7 +28,9 @@ const Register = () => {
             console.log('user', user);
         }
     })
-
+    if (loading || updating) {
+        return <Loading></Loading>
+    }
     const handleRegister = async (e) => {
         e.preventDefault()
         const name = e.target.name.value;

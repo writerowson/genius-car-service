@@ -3,7 +3,10 @@ import { Form, Button } from 'react-bootstrap'
 import { useSendPasswordResetEmail, useSignInWithEmailAndPassword } from 'react-firebase-hooks/auth';
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import auth from '../../../firbaseInit';
+import Loading from '../shared/Loading/Loading';
 import JointLogIn from './Jointlogin/JointLogIn';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Login = () => {
     const emailRef = useRef('')
@@ -27,7 +30,9 @@ const Login = () => {
         error,
     ] = useSignInWithEmailAndPassword(auth)
 
-
+    if (loading || sending) {
+        return <Loading></Loading>
+    }
     if (error) {
         errorElement = <div>
             <p className='text-danger'>Error: {error?.message} </p>
@@ -47,8 +52,13 @@ const Login = () => {
 
     const resetPassword = async () => {
         const email = emailRef.current.value
-        await sendPasswordResetEmail(email);
-        alert('Sent email');
+        if (email) {
+            await sendPasswordResetEmail(email)
+            toast('Email Sent');
+        }
+        else {
+            toast('please enter your email')
+        }
     }
 
     return (
@@ -69,9 +79,9 @@ const Login = () => {
             </Form>
             {errorElement}
             <p>New to Genius Car?<Link to='/register' className='text-primary  pe-auto text-decoration-none' onClick={navigateRegister}> Plz Register</Link></p>
-            <p>New to Genius Car?<Link to='/register' className='text-primary  pe-auto text-decoration-none' onClick={resetPassword}> Forget Password</Link></p>
-
+            <p>New to Genius Car?<button className='text-primary btn btn-link pe-auto text-decoration-none' onClick={resetPassword}> Forget Password</button></p>
             <JointLogIn></JointLogIn>
+            <ToastContainer />
         </div >
     );
 };

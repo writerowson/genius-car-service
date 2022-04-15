@@ -5,6 +5,7 @@ import github from '../../../../images/github.png'
 import { useSignInWithGithub, useSignInWithGoogle } from 'react-firebase-hooks/auth';
 import auth from '../../../../firbaseInit';
 import { useNavigate } from 'react-router-dom';
+import Loading from '../../shared/Loading/Loading';
 
 const JointLogIn = () => {
     const [signInWithGoogle, user, loading, error] = useSignInWithGoogle(auth);
@@ -17,6 +18,10 @@ const JointLogIn = () => {
             <p className='text-danger'>Error: {error?.message} {error1?.message}</p>
         </div>
     }
+    // i don't now why this error happen ?
+    // if (loading || loading1) {
+    //     return <Loading></Loading>
+    // }
     useEffect(() => {
         if (user || user1) {
             navigate('/home')
@@ -24,7 +29,9 @@ const JointLogIn = () => {
 
     }, [])
 
-
+    if (loading || loading1) {
+        return <Loading></Loading>
+    }
 
     return (
         <div>
