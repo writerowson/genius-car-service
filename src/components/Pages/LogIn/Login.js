@@ -21,14 +21,15 @@ const Login = () => {
         }
     })
 
-    // to show other option also while try to su=ign in google
+    // to show other option also while try to sign in google
     let errorElement
     const [
         signInWithEmailAndPassword,
         user,
         loading,
         error,
-    ] = useSignInWithEmailAndPassword(auth)
+    ] = useSignInWithEmailAndPassword(auth);
+
 
     if (loading || sending) {
         return <Loading></Loading>

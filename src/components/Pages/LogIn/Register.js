@@ -3,6 +3,8 @@ import { useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import './Register.css'
 import { useCreateUserWithEmailAndPassword, useUpdateProfile } from 'react-firebase-hooks/auth';
+import { sendEmailVerification } from "firebase/auth";
+
 import auth from '../../../firbaseInit';
 import JointLogIn from './Jointlogin/JointLogIn';
 import Loading from '../shared/Loading/Loading';
@@ -23,11 +25,7 @@ const Register = () => {
         navigate('/login')
     }
 
-    useEffect(() => {
-        if (user) {
-            console.log('user', user);
-        }
-    })
+
     if (loading || updating) {
         return <Loading></Loading>
     }
@@ -44,6 +42,17 @@ const Register = () => {
         navigate('/home')
     }
 
+    const varifyEmail = () => {
+        sendEmailVerification(auth.currentUser)
+            .then(() => {
+                // return ('Email verification sent');
+                console.log('Email verification sent');
+            })
+    }
+    if (user) {
+        navigate('/home');
+        varifyEmail()
+    }
 
     return (
         <div className='register-form'>
