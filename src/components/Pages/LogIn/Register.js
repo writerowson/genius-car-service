@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useEffect } from 'react';
+
 import { Link, useNavigate } from 'react-router-dom';
 import './Register.css'
 import { useCreateUserWithEmailAndPassword, useUpdateProfile } from 'react-firebase-hooks/auth';
@@ -24,7 +24,9 @@ const Register = () => {
     const navigateLogin = () => {
         navigate('/login')
     }
-
+    if (user) {
+        navigate('/home');
+    }
 
     if (loading || updating) {
         return <Loading></Loading>
@@ -38,14 +40,14 @@ const Register = () => {
 
         await createUserWithEmailAndPassword(email, password)
         await updateProfile({ displayName: name });
-        console.log('Updated profile');
+        console.log(updateProfile);
         navigate('/home')
     }
 
     const varifyEmail = () => {
         sendEmailVerification(auth.currentUser)
             .then(() => {
-                // return ('Email verification sent');
+                alert('Email verification sent');
                 console.log('Email verification sent');
             })
     }
